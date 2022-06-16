@@ -166,7 +166,7 @@ double MergeConvexHulls(Model &m, vector<Model> &meshs, vector<Model> &cvxs, Par
   return h;
 }
 
-void Compute(ofstream &of, Model &mesh, Params &params)
+size_t Compute(ofstream &of, Model &mesh, Params &params)
 {
   vector<Model> InputParts = {mesh};
   vector<Model> parts, pmeshs;
@@ -262,4 +262,6 @@ void Compute(ofstream &of, Model &mesh, Params &params)
   SaveOBJ(objName, parts, params);
 
   of.close();
+
+  return parts.size();
 }

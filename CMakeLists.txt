@@ -33,3 +33,8 @@ add_library(coacd SHARED
 
 add_executable(main main.cpp)
 target_link_libraries(main coacd)
+
+add_subdirectory("3rd/pybind11")
+include_directories("3rd/pybind11/include")
+pybind11_add_module(pycoacd "python/pycoacd.cpp" NO_EXTRAS)
+target_link_libraries(pycoacd PRIVATE coacd)

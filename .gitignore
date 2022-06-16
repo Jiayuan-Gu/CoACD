@@ -25,3 +25,7 @@ dist/
 
 # VSCode editor settings
 .vscode
+
+# project
+/outputs
+/wheelhouse

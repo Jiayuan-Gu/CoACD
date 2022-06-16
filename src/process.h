@@ -21,7 +21,7 @@
 void ManifoldPreprocess(Params &params, Model &m, ofstream &of);
 void MergeCH(Model &ch1, Model &ch2, Model &ch);
 double MergeConvexHulls(Model &m, vector<Model> &meshs, vector<Model> &cvxs, Params &params, ofstream &of, double epsilon = 0.02, double threshold = 0.01);
-void Compute(ofstream &of, Model &mesh, Params &params);
+size_t Compute(ofstream &of, Model &mesh, Params &params);
 
 inline void addNeighbor(map<pair<int, int>, pair<int, int>> &edge_map, pair<int, int> &edge, vector<int> &neighbors, int idx)
 {
