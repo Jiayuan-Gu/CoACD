@@ -7,7 +7,7 @@ __all__ = [
 ]
 
 
-def coacd(input: str, output: str, log: str = '', threshold: float = 0.05, seed: int = 0, preprocess: bool = True) -> int:
+def coacd(input: str, output: str, log: str = '', threshold: float = 0.05, seed: int = 0, preprocess: bool = True, verbose: bool = True) -> int:
     """
     Approximate Convex Decomposition for 3D Meshes with Collision-Aware Concavity and Tree Search.
 
@@ -19,6 +19,7 @@ def coacd(input: str, output: str, log: str = '', threshold: float = 0.05, seed:
       seed: random seed used for sampling
       preprocess: flag to enable manifold preprocessing. 
         If your input is already manifold mesh, disabling the preprocessing can avoid introducing extra artifacts.
+      verbose: flag to enable console output.
 
     References:
       https://github.com/SarahWeiii/CoACD

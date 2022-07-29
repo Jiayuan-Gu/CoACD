@@ -13,7 +13,7 @@ namespace py = pybind11;
 
 int coacd(const string input_model, const string output_name,
           const string logfile, double threshold, unsigned int seed,
-          bool preprocess) {
+          bool preprocess, bool verbose) {
   Params params;
 
   // params.seed = (unsigned)time(NULL);
@@ -68,6 +68,14 @@ int coacd(const string input_model, const string output_name,
          << endl;
   params.threshold = min(max(params.threshold, 0.01), 1.0);
 
+  // https://stackoverflow.com/questions/8246317/redirecting-function-output-to-dev-null
+  // Backup streambuffers of cout
+  streambuf* cout_oldbuf = cout.rdbuf();
+  ofstream nf("/dev/null");
+  if (!verbose) {
+    cout.rdbuf(nf.rdbuf());  // Redirect cout to a buffer
+  }
+
   Model m;
 
   ofstream of(params.logfile);
@@ -85,6 +93,11 @@ int coacd(const string input_model, const string output_name,
 
   of.close();
 
+  if (!verbose) {
+    cout.rdbuf(cout_oldbuf);  // Redirect cout back to screen
+  }
+  nf.close();
+
   return n_convex;
 }
 
@@ -101,11 +114,12 @@ Args:
   seed: random seed used for sampling
   preprocess: flag to enable manifold preprocessing. 
     If your input is already manifold mesh, disabling the preprocessing can avoid introducing extra artifacts.
+  verbose: flag to enable console output.
 
 References:
   https://github.com/SarahWeiii/CoACD
 )doc",
         py::arg("input"), py::arg("output"), py::arg("log") = "",
         py::arg("threshold") = 0.05, py::arg("seed") = 0,
-        py::arg("preprocess") = true);
+        py::arg("preprocess") = true, py::arg("verbose") = true);
 }
