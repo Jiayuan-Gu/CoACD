@@ -12,11 +12,14 @@ using namespace std;
 namespace py = pybind11;
 
 int coacd(const string input_model, const string output_name,
-          const string logfile, double threshold, unsigned int seed,
-          bool preprocess, bool verbose) {
+          const string logfile, double threshold, int64_t seed, bool preprocess,
+          bool verbose) {
   Params params;
 
-  // params.seed = (unsigned)time(NULL);
+  if (seed >= 0)
+    params.seed = (unsigned)seed;
+  else
+    params.seed = (unsigned)time(NULL);
   params.seed = seed;
   params.threshold = threshold;
   params.preprocess = preprocess;
@@ -120,6 +123,6 @@ References:
   https://github.com/SarahWeiii/CoACD
 )doc",
         py::arg("input"), py::arg("output"), py::arg("log") = "",
-        py::arg("threshold") = 0.05, py::arg("seed") = 0,
+        py::arg("threshold") = 0.05, py::arg("seed") = -1,
         py::arg("preprocess") = true, py::arg("verbose") = true);
 }
