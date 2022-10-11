@@ -49,13 +49,11 @@ int coacd(const string input_model, const string output_name,
     return -1;
   }
   if (params.logfile == "") {
-    if (ext == ".obj")
+    if (ext == ".obj" || ext == ".wrl") {
       params.logfile =
-          regex_replace(params.output_name, regex(".obj"), "_log.txt");
-    else if (ext == ".wrl")
-      params.logfile =
-          regex_replace(params.output_name, regex(".wrl"), "_log.txt");
-    else {
+          params.output_name.substr(0, params.output_name.length() - 4) +
+          ".log.txt";
+    } else {
       cout << "Error: Output Filename must be .OBJ or .WRL format!" << endl;
       return -1;
     }
